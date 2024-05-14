@@ -41,7 +41,7 @@ const loginUser = async (req, res) => {
         res.cookie('token', token, {
             httpOnly: true,
             secure: false,
-            sameSite: 'None',
+            sameSite: 'lax',
             expires: new Date(Date.now() + monthInSeconds * 3000)
         }).send({ message: 'Login successfully' });
     } catch(error) {
