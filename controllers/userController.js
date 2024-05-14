@@ -40,8 +40,8 @@ const loginUser = async (req, res) => {
         const token = jwt.sign({ user: user.name }, process.env.JWT_SECRET, { expiresIn: '90d' });
         res.cookie('token', token, {
             httpOnly: true,
-            secure: true,
-            sameSite: none,
+            secure: false,
+            sameSite: 'None',
             expires: new Date(Date.now() + monthInSeconds * 3000)
         }).send({ message: 'Login successfully' });
     } catch(error) {
