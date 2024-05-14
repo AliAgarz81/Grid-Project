@@ -13,13 +13,7 @@ const compression = require('compression');
 const PORT = process.env.PORT;
 const allowedOrigins = ['http://localhost:5173', 'https://gridstudio.netlify.app'];
 const corsOptions = {
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
+    origin: 'http://localhost:5173',
     credentials: true,
   };
 
@@ -27,7 +21,7 @@ const corsOptions = {
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
-app.use(corsOptions);
+app.use(cors(corsOptions));
 app.use(compression());
 
 (async () => {
