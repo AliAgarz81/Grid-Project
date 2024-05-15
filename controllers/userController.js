@@ -30,18 +30,18 @@ const loginUser = async (req, res) => {
     try {
         const user = await User.findOne({ where: { name: name } });
         if (!user) {
-            return res.status(401).json({ error: 'Invalid credentials' });
+            return res.status(400).json({ message: 'Invalid credentials' });
         }
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(401).json({ error: 'Invalid credentials' });
+            return res.status(400).json({ message: 'Invalid credentials' });
         }
         const monthInSeconds = 30 *24 * 60 * 60;
         const token = jwt.sign({ user: user.name }, process.env.JWT_SECRET, { expiresIn: '90d' });
         res.cookie('token', token, {
             httpOnly: true,
-            secure: true,
-            sameSite: 'None',
+            secure: false,
+            sameSite: 'lax',
             expires: new Date(Date.now() + monthInSeconds * 3000)
         }).send({ message: 'Login successfully' });
     } catch(error) {
@@ -67,11 +67,16 @@ const getName = (req,res) => {
 
 const checkUser = (req,res) => {
     try {
-        if(req.cookies.token) {
-            res.status(200).send(true);
+        const token = req.cookies['token'];
+        if(!token) {
+            return res.status(200).send(false);
         } else {
-            res.status(200).send(false);
- 
+            jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+                if(err) {
+                    return res.status(200).send(false);
+                }
+                return res.status(200).send(true);
+            });
         }
     } catch(error) {
         res.status(500).json({ message: error.message });

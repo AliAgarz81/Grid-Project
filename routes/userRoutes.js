@@ -5,7 +5,7 @@ const router = require('express').Router();
 
 router.post('/create', createUser);
 router.post('/login', loginUser);
-router.post('/logout', authGuard, logoutUser);
+router.post('/logout', logoutUser);
 router.get('/', authGuard, getName);
 router.get('/check', checkUser);
 

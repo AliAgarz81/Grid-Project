@@ -12,7 +12,7 @@ const compression = require('compression');
 
 const PORT = process.env.PORT;
 const corsOptions = {
-    origin: 'https://gridstudio.netlify.app',
+    origin: ['http://localhost:5173', 'https://gridstudio.netlify.app'],
     credentials: true
   };
 
