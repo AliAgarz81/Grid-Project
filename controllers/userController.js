@@ -70,7 +70,7 @@ const getName = (req,res) => {
 const getUsers = async (req,res) => {
     try {
         const users = await User.findAll({
-            attributes: ["id", "name", "password"]
+            attributes: ["id", "name"]
         });
         const userData = users?.filter((u) => u.name != req.user);
         res.status(201).json({ users: userData });
