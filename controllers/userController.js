@@ -67,6 +67,16 @@ const getName = (req,res) => {
     }
 };
 
+const getUsers = async (req,res) => {
+    try {
+        const users = await User.findAll();
+        const userData = users?.filter((u) => u.name != req.user);
+        res.status(201).json({ users: userData });
+    } catch(error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 const checkUser = (req,res) => {
     try {
         const token = req.cookies['token'];
@@ -85,4 +95,4 @@ const checkUser = (req,res) => {
     }
 }
 
-module.exports = { createUser, loginUser, logoutUser, getName, checkUser };
+module.exports = { createUser, loginUser, logoutUser, getName, checkUser, getUsers };
