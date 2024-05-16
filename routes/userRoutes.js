@@ -8,7 +8,7 @@ router.post('/login', loginUser);
 router.post('/logout', logoutUser);
 router.get('/', authGuard, getName);
 router.get('/all', authGuard, getUsers);
-router.delete('/', authGuard, deleteUser);
+router.delete('/:id', authGuard, deleteUser);
 router.get('/check', checkUser);
 
 module.exports = router;
