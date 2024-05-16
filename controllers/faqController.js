@@ -15,6 +15,15 @@ const createFaq = async (req,res) => {
     }
 };
 
+const getAllFaqs = async (req,res) => {
+    try {
+        const faqs = await Faq.findAll();
+        return res.status(200).json({ faqs: faqs });
+    } catch(error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
+
 const getFaqs = async (req,res) => {
     const lng = req.params.lng;
     let faqs;
@@ -90,4 +99,4 @@ const deleteFaq = async (req,res) => {
     }
 }
 
-module.exports = { createFaq, getFaqs, getFaq, updateFaq, deleteFaq };
+module.exports = { createFaq, getFaqs, getFaq, updateFaq, deleteFaq, getAllFaqs };

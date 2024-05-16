@@ -4,7 +4,7 @@ const sendEmail = require('../controllers/emailController');
 const router = require('express').Router();
 
 const removeSpaces = (value) => {
-    return value.replace(/\s/g, '');
+    return value?.replace(/\s/g, '');
   };
 
 router.post(

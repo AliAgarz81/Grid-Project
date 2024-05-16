@@ -10,6 +10,7 @@ const createContent = async (req,res) => {
     }
     try {
         const newContent = await Content.create({ title: title, link: link, image: file.buffer });
+        cache.clear('contents');
         res.status(201).json({message: "Created successfully"});
     } catch(error) {
         if (error.name === 'SequelizeValidationError') {
@@ -64,6 +65,7 @@ const updateContent = async (req,res) => {
         content.title = title;
         content.link = link;
         await content.save();
+        cache.clear('contents');
         return res.status(200).json({ message: "Updated succesfully" });
     } catch(error) {
         if (error.name === 'SequelizeValidationError') {
@@ -83,6 +85,7 @@ const deleteContent = async (req,res) => {
             return res.status(404).json({ message: "Content not found" });
         }
         await content.destroy();
+        cache.clear('contents');
         return res.status(200).json({ message: "Deleted succesfully" });
     } catch(error) {
         return res.status(500).json({ message: error.message });

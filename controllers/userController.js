@@ -39,6 +39,8 @@ const loginUser = async (req, res) => {
         const monthInSeconds = 30 *24 * 60 * 60;
         const token = jwt.sign({ user: user.name }, process.env.JWT_SECRET, { expiresIn: '90d' });
         res.cookie('token', token, {
+            //domain: '.example.com',
+            //path: '/',
             httpOnly: true,
             secure: false,
             sameSite: 'lax',

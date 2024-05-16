@@ -12,7 +12,7 @@ const compression = require('compression');
 
 const PORT = process.env.PORT;
 const corsOptions = {
-    origin: ['http://localhost:5173', 'https://gridstudio.netlify.app'],
+    origin: ['http://localhost:5173', 'https://gridstudio.netlify.app', 'http://example.com:5173'],
     credentials: true
   };
 
@@ -34,11 +34,11 @@ app.use(compression());
 })();
 
 
-app.use('/api/users', userRoutes);
-app.use('/api/contents', contentRoutes);
-app.use('/api/faqs', faqRoutes);
-app.use('/api/email', emailRoutes)
-app.use('/api/image', imageRoutes);
+app.use('/users', userRoutes);
+app.use('/contents', contentRoutes);
+app.use('/faqs', faqRoutes);
+app.use('/email', emailRoutes)
+app.use('/image', imageRoutes);
 app.use('/*', (req,res) => res.status(404).send({ message: "Invalid action" }));
 
 app.listen(PORT, () => {
