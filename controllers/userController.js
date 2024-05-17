@@ -42,8 +42,8 @@ const loginUser = async (req, res) => {
             //domain: '.example.com',
             //path: '/',
             httpOnly: true,
-            secure: false,
-            sameSite: 'lax',
+            secure: true,
+            sameSite: 'None',
             expires: new Date(Date.now() + monthInSeconds * 3000)
         }).send({ message: 'Login successfully' });
     } catch(error) {
