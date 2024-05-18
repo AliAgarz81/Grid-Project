@@ -31,6 +31,22 @@ const Content = sequelize.define("Content", {
             },
         },
     },
+    category: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notNull: {
+                msg: "Link is required",
+            },
+            notEmpty: {
+                msg: "Link is required",
+            },
+            isIn: {
+                args: [["IT", "Design"]],
+                msg: "Invalid category"
+            }
+        },
+    },
     image: {
         type: DataTypes.BLOB('long'),
         allowNull: false,
