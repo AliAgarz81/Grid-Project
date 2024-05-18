@@ -39,11 +39,9 @@ const loginUser = async (req, res) => {
         const monthInSeconds = 30 *24 * 60 * 60;
         const token = jwt.sign({ user: user.name }, process.env.JWT_SECRET, { expiresIn: '90d' });
         res.cookie('token', token, {
-            //domain: '.example.com',
-            //path: '/',
             httpOnly: true,
             secure: true,
-            sameSite: 'None',
+            sameSite: 'strict',
             expires: new Date(Date.now() + monthInSeconds * 3000)
         }).send({ message: 'Login successfully' });
     } catch(error) {
@@ -53,7 +51,12 @@ const loginUser = async (req, res) => {
 
 const logoutUser = (req,res) => {
     try {
-        res.clearCookie('token').send({ message: 'Logout successfully' });
+        res.clearCookie('token', {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict',
+            expires: new Date(0)
+        }).send({ message: 'Logout successfully' });
     } catch(error) {
         res.status(500).json({ message: error.message });
     }
