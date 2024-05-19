@@ -9,7 +9,7 @@ router.get('/', getContents);
 router.get('/it', getITContents);
 router.get('/design', getDesignContents);
 router.get('/:id', getContent);
-router.put('/:id', authGuard, updateContent);
+router.put('/:id', upload.single('file'), authGuard, updateContent);
 router.delete('/:id', authGuard, deleteContent);
 
 module.exports = router;

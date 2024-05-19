@@ -88,6 +88,7 @@ const getContents = async (req,res) => {
 const updateContent = async (req,res) => {
     const id = req.params.id;
     const { title, link } = req.body;
+    const file = req.file
     try {
         const content = await Content.findOne({ where: { id }});
         if(!content) {
@@ -95,6 +96,9 @@ const updateContent = async (req,res) => {
         }
         content.title = title;
         content.link = link;
+        if (file) {
+            content.image = file?.buffer
+        }
         await content.save();
         cache.clear('contents');
         cache.clear('designContents');
